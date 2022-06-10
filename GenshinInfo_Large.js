@@ -304,11 +304,15 @@ async function createWidget() {
   }
 
   let TransfmTextElement = ''
-  if (`${resin.transformer.reached}` == true) {
+  if (`${resin.transformer.recovery_time.reached}` === 'true') {
     TransfmTextElement = transfmStack.addText('可使用')
     TransfmTextElement.textColor = Color.green()
   } else {
-    TransfmTextElement = transfmStack.addText(`${resin.transformer.recovery_time.Day}天后`)
+    if (parseInt(`${resin.transformer.recovery_time.Day}`) > 0) {
+      TransfmTextElement = transfmStack.addText(`${resin.transformer.recovery_time.Day}天后`)
+    } else if (parseInt(`${resin.transformer.recovery_time.Hour}`) > 0){
+      TransfmTextElement = transfmStack.addText(`${resin.transformer.recovery_time.Hour}小时后`)
+    }
     TransfmTextElement.textColor = Color.white()
   }
   TransfmTextElement.textOpacity = 1
